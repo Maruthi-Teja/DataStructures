@@ -4,18 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minidev.json.*;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.project.user.model.Response;
 
 
 @Service
 public class SortServiceImpl {
 	
 	
-	public List<Integer> quickSort(JSONObject request ){
+	public Response quickSort(JSONObject request ){
+		
+		Response quickSortResponse = new Response();
+		try {
 		List<Integer> integerList = (List<Integer>)request.get("list");
 		quickSortHelper(integerList, 0, integerList.size()-1);
-		return integerList;
+		quickSortResponse.setList(integerList);
+		quickSortResponse.setResponse("Success");
+		quickSortResponse.setStatusCode(200);
+		}catch(Exception e) {
+			
+			System.out.println("exception while processing quick sort");
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "exception");
+		}
+		return quickSortResponse;
 	}
 	
 	public static void quickSortHelper(List<Integer> list, int low , int high) {

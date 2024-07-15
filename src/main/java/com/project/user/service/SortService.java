@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.user.model.Response;
+
 
 @RestController
 @RequestMapping(value="/sortings")
@@ -21,9 +23,9 @@ public class SortService {
 	SortServiceImpl sortServiceImpl ;
 	
 	@PostMapping(path="/qucikSort", produces = "application/json")
-	public ResponseEntity<List<Integer>> quickSort(@RequestBody JSONObject list){
+	public ResponseEntity<Response> quickSort(@RequestBody JSONObject list){
 		
-		return new ResponseEntity<List<Integer>>(sortServiceImpl.quickSort(list), HttpStatus.OK);
+		return new ResponseEntity<Response>(sortServiceImpl.quickSort(list), HttpStatus.OK);
 	}
 
 }
